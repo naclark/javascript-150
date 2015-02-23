@@ -1,0 +1,184 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Assignment #6</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+	<style type="text/css">
+		div {display:none;}
+        .desc {position: fixed; top:30px; right: 5px; border: solid black 2px;}
+	</style>
+	<script type="text/javascript">
+	function toggleDiv(div1, div2) {
+		$(div1).show();
+		$(div2).hide();
+        $(div1 + " input").prop("checked", false);
+        $(div2 + " input").prop("checked", false);
+
+	}
+	$(document).ready(function() {
+		$('a').click(function(){ // Wire the anchor tags to toggle divs.
+            wiringStr = "#"+this.id.slice(0,this.id.length-1);
+            if(this.id.charAt(this.id.length-1) == 'A'){ // It's an "A" toggle.
+                toggleDiv(wiringStr+"sA",wiringStr+"sB");
+            } else { // It's a B toggle.
+                toggleDiv(wiringStr+"sB",wiringStr+"sA");
+            }
+        });
+        
+        $('p').mouseover(function() { //Show div of description on mouseover.
+            $("#"+this.id+"desc").show();
+        });
+        $('p').mouseout(function() {
+            $("#"+this.id+"desc").hide();
+        });
+    function validateForm() {
+        result = true;
+        // Check appetizers.
+        var appChecked = $("#appsA :checked").size();
+        appChecked = (appChecked == 0)? $("#appsB :checked").size() : appChecked;
+        if (appChecked > 0 && appChecked < 3) {
+            $("span#appsError").text("");
+        } else {
+            result = false;
+            $("span#appsError").text("Please choose 1 to 2 appetizers.");
+        }
+        // Main dishes
+        if ($("#mainsA :checked").size() == 0 && $("#mainsB :checked").size()==0) {
+            $("span#mainError").text("Please choose a main dish.");
+            result = false;
+        } else {
+            $("span#mainError").text("");
+        }    
+        // Check sides.
+        var sidesChecked = $("#sidesA :checked").size();
+        sidesChecked = (sidesChecked == 0)? $("#sidesB :checked").size() : sidesChecked;
+        if (sidesChecked > 0) {
+            $("span#sidesError").text("");
+        } else {
+            result = false;
+            $("span#sidesError").text("Please choose 1 to 3 side dishes.");
+        }
+        // Beverages
+        if ($("#bevsA :checked").size() == 0 && $("#bevsB :checked").size()==0) {
+            $("span#bevsError").text("Please choose a drink.");
+            result = false;
+        } else {
+            $("span#bevsError").text("");
+        }
+        // Desserts
+        if ($("#dessA :checked").size() == 0 && $("#dessB :checked").size()==0) {
+            $("span#desError").text("Please choose a dessert.");
+            result = false;
+        } else {
+            $("span#desError").text("");
+        }
+        return result;
+    }
+	$('#restForm').submit(validateForm);
+});
+	</script>
+</head>
+
+<body>
+<h2>Welcome to the Restaurant at the End of the Universe!</h2>
+<h3>A lot of these won't make sense unless you're familiar with the source material, but they taste good anyways!</h3>
+<form action="http://www.newmanic.com/formtest.asp" method="POST" id="restForm">
+	<!-- Appetizers; 3 checkboxes with 1-2 choices -->
+	<span id="appsError"></span><br />
+	<a href="javascript:void(0)" id="appA">Click here for Galaxy Quest appetizers</a> |
+	<a href="javascript:void(0)" id="appB">Click here for JoJo's Bizarre Adventure appetizers</a>
+	<div id="appsA">
+		<p id="AA1"><input name="apps" id="appA1" type="checkbox" value="A1">Kep-Mok Bloodticks</p>
+        <div id="AA1desc" class="desc"><img src="images/AA1.jpg" /><br />Just like Mother used to make</div>
+		<p id="AA2"><input name="apps" id="appA2" type="checkbox" value="A2">Kraft Cheese Handi-Snacks</p>
+        <div id="AA2desc" class="desc"><img src="images/AA2.jpg" /><br />Synthesized using alien technology to ward off the munchies</div>
+		<p id="AA3"><input name="apps" id="appA3" type="checkbox" value="A3">Iowa beef steak bites</p>
+        <div id="AA3desc" class="desc"><img src="images/AA3.jpg" /><br />Captain Kirk would probably have liked these</div>
+	</div>
+	<div id="appsB">
+        <p id="AB1"><input name="apps" id="appB1" type="checkbox" value="B1">Spaghetti alla Puttanesca</p>
+        <div id="AB1desc" class="desc"><img src="images/AB1.jpg" /><br />Spicy. Any teeth with cavities you have will fire out<br />of your mouth like bullets, but new ones will come in</div>
+		<p id="AB2"><input name="apps" id="appB2" type="checkbox" value="B2">Lamb and applesauce</p>
+        <div id="AB2desc" class="desc"><img src="images/AB2.jpg" /><br />Great for any problems you have with your intestines!</div>
+		<p id="AB3"><input name="apps" id="appB3" type="checkbox" value="B3">Mozzarella cheese and tomato</p>
+        <div id="AB3desc" class="desc"><img src="images/AB3.jpg" /><br />For some reason your shoulders feel much better after eating this</div>
+	</div>
+	<br />
+	<!-- Main dishes; 2 selects -->
+	<span id="mainError"></span><br />
+	<a href="javascript:void(0)" id="mainA">Click here for Deadly Premonition main dishes</a> |
+	<a href="javascript:void(0)" id="mainB">Click here for Barkley, Shut Up and Jam: Gaiden main dishes</a>
+	<div id="mainsA">
+        <p id="MDA1"><input type="radio" name="mainDish" value="A1" />Sinner's Sandwich</p>
+        <p id="MDA2"><input type="radio" name="mainDish" value="A2" />Container of Liquefied Food</p>
+        <div id="MDA1desc" class="desc"><img src="images/MDA1.jpg" /><br />Consists of turkey, strawberry jam and cereal, as penance for one's sins</div>
+        <div id="MDA2desc" class="desc"><img src="images/MDA2.jpg" /><br />Believe it or not, this actually tastes pretty good</div>
+	</div>
+	<div id="mainsB">
+        <p id="MDB1"><input type="radio" name="mainDish" value="B1" />Cyberdwarf's Stew</p>
+        <p id="MDB2"><input type="radio" name="mainDish" value="B2" />Chicken Fry</p>
+        <div id="MDB1desc" class="desc"><img src="images/MDB1.jpg" /><br />Flavored with hints of slamicite, jamicite, and apple</div>
+        <div id="MDB2desc" class="desc"><img src="images/MDB2.jpg" /><br />Helps you survive the post-cyberpocalypse</div>
+	</div>
+	<br />
+	<!-- Sides; 3 checkboxes with 1-3 choices -->
+	<span id="sidesError"></span><br />
+	<a href="javascript:void(0)" id="sideA">Click here for Metal Gear Solid sides</a> |
+	<a href="javascript:void(0)" id="sideB">Click here for Fallout sides</a>
+	<div id="sidesA">
+		<p id="SA1"><input name="sides" id="sideA1" type="checkbox" value="A1">Calorie Mate</p>
+        <div id="SA1desc" class="desc"><img src="images/SA1.jpg" /><br />Japanese nutritional supplement that wards off time paradoxes</div>
+		<p id="SA2"><input name="sides" id="sideA2" type="checkbox" value="A2">Instant noodles</p>
+        <div id="SA2desc" class="desc"><img src="images/SA2.jpg" /><br />Food of the space age. You'll dream about them later</div>
+		<p id="SA3"><input name="sides" id="sideA3" type="checkbox" value="A3">Hive of Pain Hornets</p>
+        <div id="SA3desc" class="desc"><img src="images/SA3.jpg" /><br />Pretty tasty. Wear white while you're eating it, like a beekeeper</div>
+	</div>
+	<div id="sidesB">
+		<p id="SB1"><input name="sides" id="sideB1" type="checkbox" value="B1">Irradiated InstaMash</p>
+        <div id="SB1desc" class="desc"><img src="images/SB1.jpg" /><br />With real dig-in flavor!</div>
+		<p id="SB2"><input name="sides" id="sideB2" type="checkbox" value="B2">Mole rat wonder meat</p>
+        <div id="SB2desc" class="desc"><img src="images/SB2.jpg" /><br />Cured with Wonderglue; has a nutty aftertaste</div>
+		<p id="SB3"><input name="sides" id="sideB3" type="checkbox" value="B3">Small dusty box of some sort</p>
+        <div id="SB3desc" class="desc"><img src="images/SB3.jpg" /><br />A TV dinner that not only was edible at some point, it's<br />also probably edible now! Trust us!</div>
+	</div>
+	<br />
+	<!-- Beverages; same as main dishes -->
+	<span id="bevsError"></span><br />
+	<a href="javascript:void(0)" id="bevA">Click here for Trailer Park Boys beverages</a> |
+	<a href="javascript:void(0)" id="bevB">Click here for Phoenix Wright: Ace Attorney beverages</a>
+	<div id="bevsA">
+        <p id="BA1"><input type="radio" name="bevs" value="A1" />Swish</p>
+        <p id="BA2"><input type="radio" name="bevs" value="A2" />Rum and Coke</p>
+        <div id="BA1desc" class="desc"><img src="images/BA1.jpg" /><br />Made with wooden barrels that used to have whisky in<br />them, so you know it's gotta be good!</div>
+        <div id="BA2desc" class="desc"><img src="images/BA2.jpg" /><br />You will never let this leave your hand, even while driving</div>
+	</div>
+	<div id="bevsB">
+        <p id="BB1"><input type="radio" name="bevs" value="B1" />Godot's Coffee</p>
+        <p id="BB2"><input type="radio" name="bevs" value="B2" />Grape Juice</p>
+        <div id="BB1desc" class="desc"><img src="images/BB1.jpg" /><br />Hot, dark and bitter, just like justice to a guilty criminal</div>
+        <div id="BB2desc" class="desc"><img src="images/BB2.jpg" /><br />Has a trump card hidden in the bottle</div>
+	</div>
+	<br />
+	<!-- Desserts; same as main dishes -->
+	<span id="desError"></span><br />
+	<a href="javascript:void(0)" id="desA">Click here for Persona desserts</a> |
+	<a href="javascript:void(0)" id="desB">Click here for Twin Peaks desserts</a>
+	<div id="dessA">
+        <p id="DA1"><input type="radio" name="dessert" value="A1" />Topsicles</p>
+        <p id="DA2"><input type="radio" name="dessert" value="A2" />Mystery Food X</p>
+        <div id="DA1desc" class="desc"><img src="images/DA1.jpg" /><br />Frozen tofu popsicles. Betcha can't eat just one!</div>
+        <div id="DA2desc" class="desc"><img src="images/DA2.jpg" /><br />Originally intended to be curry, but it's not certain what<br />it is now. Mint chocolate was one of the ingredients,<br />so it was rebranded as a dessert</div>
+	</div>
+	<div id="dessB">
+        <p id="DB1"><input type="radio" name="dessert" value="B1" />Donuts</p>
+        <p id="DB2"><input type="radio" name="dessert" value="B2" />Cherry Pie</p>
+        <div id="DB1desc" class="desc"><img src="images/DB1.jpg" /><br />Necessary for any investigation. Comes as two boxes<br />of chocolate creams with jimmies, a box of maple bear claws,<br />one raspberry wizzle twist, and two boxes of jelly donuts</div>
+        <div id="DB2desc" class="desc"><img src="images/DB2.jpg" /><br />It goes well--damn fine, even--with coffee. The fruit is<br />particularly fresh; the log told me so</div>
+	</div>
+    <br />
+    <input type="submit"  value="Place order">
+</form>
+</body>
+</html>

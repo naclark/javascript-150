@@ -1,0 +1,18 @@
+<html>
+<head>
+<script type="text/javascript">
+var agent = navigator.userAgent;
+agent = agent.toLowerCase();
+alert(agent);
+var myBrowser = 'firefox';
+if (agent.lastIndexOf(myBrowser) != -1) {
+    alert("Firefox!");
+} else {
+	alert("Not Firefox!");
+}
+</script>
+</head>
+<body>
+<h1><script>document.write(myBrowser);</script></h1>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<html>
+<head>
+<script type="text/javascript">
+//MSIE, Firefox, Opera, Chrome, Safari, Netscape
+//"msie", "firefox" (without "navigator"), "opr" (also has "chrome" and "safari", so be careful), "chrome", "safari", "navigator"
+function browserCheck(){
+	var myDate = new Date();
+	var myYear = myDate.getFullYear();
+	if (myYear > 2014) {
+		myYear = "2014 - " + myYear;
+	}
+	var agent = navigator.userAgent;
+	var myBrowser = "UNIDENTIFIED FLYING BROWSER";
+	var myColor = "orange";
+	var myImage = "other.jpg";
+	agent = agent.toLowerCase();
+	//alert(agent);
+	if (agent.lastIndexOf('opr') != -1) { // version 15+, I think
+		myBrowser = 'Opera';
+		myColor = 'purple';
+		myImage = 'opera.jpg';
+	}else if (agent.lastIndexOf('msie') != -1) {
+		myBrowser = "Internet Explorer";
+		myColor = 'light blue';
+		myImage = 'msie.jpg';
+	}else if (agent.lastIndexOf('navigator') != -1) {
+		myBrowser = "Netscape Navigator";
+		myColor = 'silver';
+		myImage = 'trick.png';
+	}else if (agent.lastIndexOf('firefox') != -1) {
+		myBrowser = "Firefox";
+		myColor = 'red';
+		myImage = 'firefox.jpg';
+	}else if (agent.lastIndexOf('chrome') != -1) {
+		myBrowser = "Google Chrome";
+		myColor = 'yellow';
+		myImage = 'chrome.jpg';
+	}else if (agent.lastIndexOf('safari') != -1) {
+		myBrowser = "Safari";
+		myColor = 'green';
+		myImage = 'safari.jpg';
+	}
+	var myText = 'You\'re using '+myBrowser+', are ya? That\'s some taste you have. No, really. I\'m not being sarcastic at all. Put me on a desert island and say "Hey, you only get one browser for the rest of your miserable life!" and I\'d definitely choose '+myBrowser+', no doubt about it. I\'m absolutely certain nobody	laughs behind your back about your use of '+myBrowser+'! <br> Anyways, enjoy your stay.';
+	document.bgColor = myColor;
+	document.getElementById('pageText').innerHTML = myText;
+	document.getElementById('myImg').src = myImage;
+	document.getElementById('copyright').innerHTML = "&copy; " + myYear;
+}
+</script>
+</head>
+<body onload="browserCheck();">
+<img src='' id='myImg' />
+<div id='pageText'> </div>
+<div id='copyright'> </div>
+</body>
+</html>

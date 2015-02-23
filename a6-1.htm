@@ -1,0 +1,240 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>js_template.htm</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<script src="include/util.js" type="text/javascript"></script><!-- utility file of handy JS functions -->
+	<script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="include/styles.css" /><!-- optional stylesheet reference -->
+	<style type="text/css">
+		/* embedded style rules could go here
+		#appsA, #appsB, #mainsA, #mainsB,
+		*/
+		div {display:none;}
+	</style>
+	<script type="text/javascript">
+	function toggleDiv(div1, div2) {
+		$(div1).show();
+		$(div2).hide();
+		// Reset selections. If we're toggling [A]ppetizers or [S]ides, then it'll be
+		// different from toggling the select elements used for main dish/beverage/dessert.
+		if (div1.charAt(1)=="a" || div1.charAt(1)=="s") { // It's checkboxes.
+			$(div1 + " :checkbox").prop("checked", false);
+			$(div2 + " :checkbox").prop("checked", false);
+		} else { // It's a select box.
+			$(div1 + " select").prop('selectedIndex',0);
+			$(div2 + " select").prop('selectedIndex',0);
+		}
+	}
+	$(document).ready(function() {
+		/*
+        for (i=0; i < 5; i++) {
+			// Wire the A categories first.
+            var pluralStr='';
+            //alert(s1);
+			$(types[i]+"A").click(function(){
+                pluralStr = this.slice(0,this.length-1); //This is awful. Variable scope sucks.
+				toggleDiv(pluralStr+"sA", pluralStr+"sB");
+			});
+            // Then Bs.
+            $(types[i]+"B").click(function(){
+                pluralStr = this.slice(0,this.length-1);
+                toggleDiv(pluralStr+"sB", pluralStr+"sA");
+            });
+		} */
+		
+		$("#appA").click(function(){
+			toggleDiv("#appsA","#appsB");
+		});
+		$("#appB").click(function(){
+			toggleDiv("#appsB","#appsA");
+		});
+		$("#mainA").click(function(){
+			toggleDiv("#mainsA","#mainsB");
+		});
+		$("#mainB").click(function(){
+			toggleDiv("#mainsB","#mainsA");
+		});
+		$("#sideA").click(function(){
+			toggleDiv("#sidesA","#sidesB");
+		});
+		$("#sideB").click(function(){
+			toggleDiv("#sidesB","#sidesA");
+		});
+		$("#bevA").click(function(){
+			toggleDiv("#bevsA","#bevsB");
+		});
+		$("#bevB").click(function(){
+			toggleDiv("#bevsB","#bevsA");
+		});
+		$("#desA").click(function(){
+			toggleDiv("#dessA","#dessB");
+		});
+		$("#desB").click(function(){
+			toggleDiv("#dessB","#dessA");
+		});
+});
+    function validateForm() {
+        result = true;
+        // Check appetizers.
+        var appChecked = $("#appsA :checked").size();
+        appChecked = (appChecked == 0)? $("#appsB :checked").size() : appChecked;
+        if (appChecked > 0 && appChecked < 3) {
+            $("span#appsError").text("");
+        } else {
+            result = false;
+            $("span#appsError").text("Please choose 1 to 2 appetizers.");
+        }
+        
+        // Check main dish. There's probably a better jQuery way to do this.
+        if (document.getElementsByTagName("select")[0].value || document.getElementsByTagName("select")[1].value) {
+            $("span#mainError").text("");
+        } else {
+            $("span#mainError").text("Please choose a main dish.");
+            result = false;
+        }
+        
+        // Check sides.
+        var sidesChecked = $("#sidesA :checked").size();
+        sidesChecked = (sidesChecked == 0)? $("#sidesB :checked").size() : sidesChecked;
+        if (sidesChecked > 0) {
+            $("span#sidesError").text("");
+        } else {
+            result = false;
+            $("span#sidesError").text("Please choose 1 to 3 side dishes.");
+        }
+        
+        // Beverages.
+        if (document.getElementsByTagName("select")[2].value || document.getElementsByTagName("select")[3].value) {
+            $("span#bevsError").text("");
+        } else {
+            $("span#bevsError").text("Please choose a drink.");
+            result = false;
+        }
+        // Desserts.
+        if (document.getElementsByTagName("select")[4].value || document.getElementsByTagName("select")[5].value) {
+            $("span#desError").text("");
+        } else {
+            $("span#desError").text("Please choose a dessert.");
+            result = false;
+        }
+        return result;
+    }
+	/*
+	// register event on form, not submit button
+	function onSubmit() { 
+		var fields = $("input[name='list']").serializeArray(); 
+		if (fields.length == 0) 
+		{ 
+			alert('nothing selected'); 
+			// cancel submit
+			return false;
+		} 
+		else 
+		{ 
+			alert(fields.length + " items selected"); 
+		}
+		}
+	$('#subscribeForm').submit(onSubmit) */
+	</script>
+</head>
+
+<body>
+<form method="POST" id="subscribeForm">
+	<!-- Appetizers; 3 checkboxes with 1-2 choices -->
+	<span id="appsError"></span><br />
+	<a href="#" id="appA">Click here for A appetizers</a>
+	<a href="#" id="appB">Click here for B appetizers</a>
+	<div id="appsA">
+		<input name="apps" id="appA1" type="checkbox" value="A1">A1<br />
+		<input name="apps" id="appA2" type="checkbox" value="A2">A2<br />
+		<input name="apps" id="appA3" type="checkbox" value="A3">A3<br />
+	</div>
+	<div id="appsB">
+		<input name="apps" id="appB1" type="checkbox" value="B1">B1<br />
+		<input name="apps" id="appB2" type="checkbox" value="B2">B2<br />
+		<input name="apps" id="appB3" type="checkbox" value="B3">B3<br />
+	</div>
+	
+	<!-- Main dishes; 2 selects -->
+	<span id="mainError"></span><br />
+	<a href="#" id="mainA">Click here for A main dishes</a>
+	<a href="#" id="mainB">Click here for B main dishes</a>
+	<div id="mainsA">
+		<select name="mainDish">
+		<option value="">Please pick a dish</option>
+		<option value="A1">MD A1</option>
+		<option value="A2">MD A2</option>
+		</select>
+	</div>
+	<div id="mainsB">
+		<select name="mainDish">
+		<option value="">Please pick a dish</option>
+		<option value="B1">MD B1</option>
+		<option value="B2">MD B2</option>
+		</select>
+	</div>
+	
+	<!-- Sides; 3 checkboxes with 1-3 choices -->
+	<span id="sidesError"></span><br />
+	<a href="#" id="sideA">Click here for A sides</a><br />
+	<a href="#" id="sideB">Click here for B sides</a>
+	<div id="sidesA">
+		<input name="sides" id="sideA1" type="checkbox" value="A1">A1<br />
+		<input name="sides" id="sideA2" type="checkbox" value="A2">A2<br />
+		<input name="sides" id="sideA3" type="checkbox" value="A3">A3<br />
+	</div>
+	<div id="sidesB">
+		<input name="sides" id="sideB1" type="checkbox" value="B1">B1<br />
+		<input name="sides" id="sideB2" type="checkbox" value="B2">B2<br />
+		<input name="sides" id="sideB3" type="checkbox" value="B3">B3<br />	
+	</div>
+	
+	<!-- Beverages; same as main dishes -->
+	<span id="bevsError"></span><br />
+	<a href="#" id="bevA">Click here for A beverages</a>
+	<a href="#" id="bevB">Click here for B beverages</a>
+	<div id="bevsA">
+		<select name="bevs">
+		<option value="">Please pick a beverage</option>
+		<option value="A1">B A1</option>
+		<option value="A2">B A2</option>
+		</select>
+	</div>
+	<div id="bevsB">
+		<select name="bevs">
+		<option value="">Please pick a beverage</option>
+		<option value="B1">B B1</option>
+		<option value="B2">B B2</option>
+		</select>
+	</div>
+	
+	<!-- Desserts; same as main dishes -->
+	<span id="desError"></span><br />
+	<a href="#" id="desA">Click here for A desserts</a>
+	<a href="#" id="desB">Click here for B desserts</a>
+	<div id="dessA">
+		<select name="dessert">
+		<option value="">Please pick a dessert</option>
+		<option value="A1">D A1</option>
+		<option value="A2">D A2</option>
+		</select>
+	</div>
+	<div id="dessB">
+		<select name="dessert">
+		<option value="">Please pick a dessert</option>
+		<option value="B1">D B1</option>
+		<option value="B2">D B2</option>
+		</select>
+	</div>
+	
+    <!-- <fieldset id="cbgroup">
+        <div><input name="list" id="list0" type="checkbox" value="newsletter0">zero</div>
+        <div><input name="list" id="list1" type="checkbox" value="newsletter1">one</div>
+        <div><input name="list" id="list2" type="checkbox" value="newsletter2">two</div>
+    </fieldset> -->
+    <input name="submit" type="submit"  value="submit">
+</form>
+</body>
+</html>

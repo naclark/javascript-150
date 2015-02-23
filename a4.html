@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title>Assignment #4: Image Funhouse</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="robots" content="noindex, nofollow" />
+	<script src="include/util.js" type="text/javascript"></script><!-- utility file of handy JS functions -->
+	<link rel="stylesheet" type="text/css" href="include/styles.css" /><!-- optional stylesheet reference -->
+	<script type="text/javascript">
+		var myimages = new Array();
+		var imgpath = "images/";
+		function preload()
+		{//no 'alias' for the arguments is declared
+			if(document.images)
+			{//check to be sure the images[] array is supported
+				var falseargs= new Array('askance_pro.jpg','bootes_pro.jpg','melee_pro.jpg', 'palanquin_pro.jpg', 'bread2.jpg', 'bread3.jpg');
+				for (x=0; x<falseargs.length; x++)
+				{//loop through the arguments of the preload function
+				  myimages[x] = new Image();  //create an image
+				  thisPic = imgpath + falseargs[x];  //prepare to load the source
+				  myimages[x].src = thisPic;  //place the source file in the image object
+				}
+			}
+		}
+
+		function rollover(thispic, imgfile)
+		{
+			var rollpic = imgpath + imgfile;  //add the path to the file name
+			thispic.src = rollpic;  //re-place the current source with the new source
+		}
+		
+		function quadRollover(rollingOn) {
+			if (rollingOn) {
+				document.askance.src='images/askance_pro.jpg';
+				document.bootes.src='images/bootes_pro.jpg';
+				document.melee.src='images/melee_pro.jpg';
+				document.palanquin.src='images/palanquin_pro.jpg';
+			} else {
+				document.askance.src='images/askance.jpg';
+				document.bootes.src='images/bootes.jpg';
+				document.melee.src='images/melee.jpg';
+				document.palanquin.src='images/palanquin.jpg';
+			}
+		}
+		
+		var myPix = new Array("images/bread1.jpg","images/bread2.jpg","images/bread3.jpg");
+		var robotCount = 0;
+		function initLinks() {
+			document.getElementById("prevLink").onclick = processPrevious;
+			document.getElementById("nextLink").onclick = processNext;
+		}
+		
+		function processPrevious() {
+			robotCount--;
+			if (robotCount == -1) {
+				robotCount = myPix.length-1;
+			}
+			document.getElementById("myPicture").src = myPix[robotCount];
+		}
+
+		function processNext() {
+			robotCount++;
+			if (robotCount == myPix.length) {
+				robotCount = 0;
+			}
+			document.getElementById("myPicture").src = myPix[robotCount];
+		}
+
+		var hsrImages = new Array("images/hsr1.png","images/hsr2.png","images/hsr3.png","images/hsr4.png");
+		var thisBanner = 0;
+
+		function choosePic() {
+			thisBanner = Math.floor((Math.random() * hsrImages.length));
+			document.getElementById("hsrBanner").src = hsrImages[thisBanner];
+			
+			rotate();
+		}
+
+		function rotate() {
+			thisBanner++;
+			if (thisBanner == hsrImages.length) {
+				thisBanner = 0;
+			}
+			document.getElementById("hsrBanner").src = hsrImages[thisBanner];
+
+			setTimeout(rotate, 3 * 1000);
+		}
+		
+
+		function choosePicRandom() {
+			var myPix = new Array("images/fruit1.jpg","images/fruit2.jpg","images/fruit3.jpg","images/fruit4.jpg");
+			var randomNum = Math.floor((Math.random() * myPix.length));
+			document.getElementById("fakeFruit").src = myPix[randomNum];
+		}
+		addOnload(choosePicRandom);
+		addOnload(choosePic);
+		addOnload(preload); // Modified "preload" to not take arguments.
+		addOnload(initLinks);
+	</script>
+</head>
+
+<body>
+<h1 align="center">Image Funhouse</h1>
+
+<h2>Pronunciation</h2>
+<p>Roll over these words to find out how to say them.</p>
+<img src="images/allpros.jpg" name="myImage" onmouseover="quadRollover(true)" onmouseout="quadRollover(false)" border="0">
+<a href="javascript:void(0)"><img src="images/askance.jpg" name="askance" onmouseover="rollover(this,'askance_pro.jpg')" onmouseout="rollover(this,'askance.jpg')" border="0"></a>
+<a href="javascript:void(0)"><img src="images/bootes.jpg" name="bootes" onmouseover="rollover(this,'bootes_pro.jpg')" onmouseout="rollover(this,'bootes.jpg')" border="0"></a>
+<a href="javascript:void(0)"><img src="images/melee.jpg" name="melee" onmouseover="rollover(this,'melee_pro.jpg')" onmouseout="rollover(this,'melee.jpg')" border="0"></a>
+<a href="javascript:void(0)"><img src="images/palanquin.jpg" name="palanquin" onmouseover="rollover(this,'palanquin_pro.jpg')" onmouseout="rollover(this,'palanquin.jpg')" border="0"></a>
+
+<h1>Bread</h1>
+<p>Looks tasty. All of these are Japanese bread, by the way.</p>
+<img src="images/bread1.jpg" id="myPicture" />
+<h2><a href="javascript:void(0);" id="prevLink">&lt;&lt;Previous</a>
+<a href="javascript:void(0);" id="nextLink">Next&gt;&gt;</a>
+
+<h2>Homestar Runner</h2>
+<p>I liked Homestar Runner when I was in high school. Here's some Homestar Runner characters.</p>
+<img src="images/hsr1.png" width="90" height="120" id="hsrBanner" />
+
+<h2>Fictional Fruit</h2>
+<p>Nothing goes better with fictional characters and food than fictional food. Try some of this:</p>
+<img src="" id="fakeFruit" />
+</body>
+</html>

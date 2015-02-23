@@ -1,0 +1,49 @@
+<html>
+<head>
+<script type="text/javascript">
+
+function timeOfDay(){
+	var myDate = new Date();
+	var myHour = myDate.getHours();
+	var myDay = myDate.getDay();
+	var myYear = myDate.getFullYear();
+	if (myYear > 2014) {
+		myYear = "2014 - " + myYear;
+	}
+	myDay = ['Sunday.','Monday.','Tuesday.','Wednesday.','Thursday.','Friday.','Saturday.'][myDay]
+	myDay = "Today is "+myDay;
+	var myImg = '';
+	var myColor = '';
+	var myText = '';
+	if (myHour == 23 || myHour < 5) 
+	{ //make night colors
+		myColor="#f04368";
+		myText='Go to sleep! ';
+		myImg = "night.jpg";
+	} else if (myHour < 12) { //make morning colors
+		myColor="#a9b690";
+		myText='Good morning. ';
+		myImg = "morning.jpg";
+	} else if (myHour < 18) { //make afternoon colors
+		myColor="#6843f0";
+		myText="Good afternoon. ";
+		myImg = "afternoon.jpg";
+	} else { //make evening colors
+		myColor="#90a9b6";
+		myText="Good evening. ";
+		myImg = "evening.jpg";
+	}
+	document.bgColor = myColor;
+	document.getElementById('myDiv').innerHTML = myText + myDay;
+	document.getElementById('timeImg').src = myImg;
+	document.getElementById('copyright').innerHTML = "&copy; " + myYear;
+} //end timeOfDay()
+</script>
+</head>
+<body onload="timeOfDay();">
+<div id="myDiv"></div>
+<img src="" id="timeImg" />
+<div id="copyright"> 
+</div>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<html>
+<head>
+<script type="text/javascript">
+//MSIE, Firefox, Opera, Chrome, Safari, Netscape
+//"msie", "firefox" (without "navigator"), "opr" (also has "chrome" and "safari", so be careful), "chrome", "safari", "navigator"
+
+var agent = navigator.userAgent;
+var myBrowser = "UNIDENTIFIED FLYING BROWSER";
+var myColor = "#fff";
+agent = agent.toLowerCase();
+//alert(agent);
+if (agent.lastIndexOf('opr') != -1) {
+    myBrowser = 'Opera';
+	myColor = 'purple';
+} else if (agent.lastIndexOf('msie') != -1) {
+    myBrowser = "Internet Explorer";
+	myColor = 'light blue';
+}else if (agent.lastIndexOf('navigator') != -1) {
+    myBrowser = "Netscape Navigator";
+	myColor = 'silver';
+}else if (agent.lastIndexOf('firefox') != -1) {
+    myBrowser = "Firefox";
+	myColor = 'red';
+}else if (agent.lastIndexOf('chrome') != -1) {
+    myBrowser = "Google Chrome";
+	myColor = 'yellow';
+}else if (agent.lastIndexOf('safari') != -1) {
+    myBrowser = "Safari";
+	myColor = 'green';
+}
+
+
+</script>
+</head>
+<body onload="document.bgColor = myColor;">
+<h1><script>document.write(myBrowser);</script></h1>
+</body>
+</html>
